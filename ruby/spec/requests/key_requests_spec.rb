@@ -9,9 +9,10 @@ RSpec.describe 'setting and getting keys' do
     DatabaseServer
   end
 
+  let(:params){ {key: "some string"} }
+
   context "setting a key" do
     it "accepts a post request" do
-      params = {key: "some string"}
       post('/set', params)
       expect(last_response).to be_ok
     end
@@ -27,6 +28,12 @@ RSpec.describe 'setting and getting keys' do
     it "returns 204 if there is no key set" do
       get('/get')
       expect(last_response.status).to eq(204)
+    end
+
+    it "returns the key" do
+      post('/set', params)
+      get('/get')
+      expect(last_response).to eq(params[:key])
     end
   end
 end
