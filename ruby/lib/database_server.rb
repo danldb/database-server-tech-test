@@ -1,6 +1,6 @@
 require 'sinatra/base'
-require 'helpers/error_helpers'
-require 'models/key'
+require_relative 'helpers/error_helpers'
+require_relative 'models/key'
 
 class DatabaseServer < Sinatra::Base
   include ErrorHelpers
