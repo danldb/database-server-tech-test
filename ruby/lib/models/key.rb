@@ -1,14 +1,17 @@
 class Key
-  @key = []
+  @all = []
 
   class << self 
+    attr_accessor :all
+
     def create_or_update(value)
-      @key << new(value)
+      new(value).tap{|key| all << key}
     end
 
-    def get
-      @key.last
+    def last
+      all.last
     end
+
   end
 
   def initialize(value)
@@ -19,6 +22,6 @@ class Key
     @value.to_s
   end
 
-  private_instance_methods :new
+  private_class_method :new, :all, :all=
 
 end

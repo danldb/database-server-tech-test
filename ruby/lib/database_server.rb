@@ -1,14 +1,21 @@
 require 'sinatra/base'
+require 'helpers/error_helpers'
+require 'models/key'
 
 class DatabaseServer < Sinatra::Base
+  include ErrorHelpers
+  set :port, 4000
+
   post("/set") do
-    halt(422, "Please set a valid key") unless params[:key]
+    halt_with_422 unless params[:key]
     Key.create_or_update(params[:key])
+    return
   end
 
   get("/get") do
-    halt(204, "No key has been set")
-    Key.last.value
+    key = Key.last
+    halt(204) unless key
+    return key.to_s
   end
-  
 end
+
